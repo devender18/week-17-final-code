@@ -23,23 +23,23 @@ export const AddMoney = () => {
 
     return <Card title="Add Money">
     <div className="w-full">
-        <TextInput label={"Amount"} placeholder={"Amount"} onChange={(e) => {
-            setAmount(e.target.value)
+        <TextInput label={"Amount"} placeholder={"Amount"} onChange={(value) => {
+            setAmount(value)
         }} />
         <div className="py-4 text-left">
             Bank
         </div>
         <Select onSelect={(value) => {
             setRedirectUrl(SUPPORTED_BANKS.find(x => x.name === value)?.redirectUrl || "")
-            setProvider(SUPPORTED_BANKS)
+            setProvider(SUPPORTED_BANKS.find(x => x.name === value)?.name || "")
         }} options={SUPPORTED_BANKS.map(x => ({
             key: x.name,
             value: x.name
         }))} />
         <div className="flex justify-center pt-4">
             <Button onClick={async () => {
-                const provider = 
-                await createOnRampTransaction(amount, provider)
+                
+                await createOnRampTransaction(amount * 100, provider)
                 window.location.href = redirectUrl || "";
             }}>
             Add Money

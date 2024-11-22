@@ -1,3 +1,5 @@
+"use server"
+
 import prisma from "@repo/db/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth";
@@ -17,7 +19,7 @@ export async function createOnRampTransaction(amount : number, provider : string
 
     await prisma.onRampTransaction.create({
         data : {
-            userId,
+            userId : Number(userId),
             amount : amount,
             status : "Processing",
             startTime : new Date(),
